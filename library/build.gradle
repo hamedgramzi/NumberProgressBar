@@ -18,5 +18,3 @@ android {
     }
     return true
 }
-
-apply from: './gradle-mvn-push.gradle'
