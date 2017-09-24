@@ -283,7 +283,7 @@ public class NumberProgressBar extends View {
 
     private void calculateDrawRectF() {
 
-        mCurrentDrawText = String.format("%d", getProgress() * 100 / getMax());
+        mCurrentDrawText = String.format("%d", getMax() < getProgress() ? getMax() : getProgress() );
         mCurrentDrawText = mPrefix + mCurrentDrawText + mSuffix;
         mDrawTextWidth = mTextPaint.measureText(mCurrentDrawText);
 
