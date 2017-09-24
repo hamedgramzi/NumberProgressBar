@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
@@ -65,7 +66,10 @@ public class NumberProgressBar extends View {
      * The prefix.
      */
     private String mPrefix = "";
-
+    /**
+     * The typeface.
+     */
+    private Typeface typeface;
 
     private final int default_text_color = Color.rgb(66, 145, 241);
     private final int default_reached_color = Color.rgb(66, 145, 241);
@@ -252,8 +256,11 @@ public class NumberProgressBar extends View {
             canvas.drawRect(mUnreachedRectF, mUnreachedBarPaint);
         }
 
-        if (mIfDrawText)
+
+        if (mIfDrawText) {
+            mTextPaint.setTypeface(typeface);
             canvas.drawText(mCurrentDrawText, mDrawTextStart, mDrawTextEnd, mTextPaint);
+        }
     }
 
     private void initializePainters() {
@@ -266,6 +273,7 @@ public class NumberProgressBar extends View {
         mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setColor(mTextColor);
         mTextPaint.setTextSize(mTextSize);
+        mTextPaint.setTypeface(typeface);
     }
 
 
@@ -283,7 +291,7 @@ public class NumberProgressBar extends View {
 
     private void calculateDrawRectF() {
 
-        mCurrentDrawText = String.format("%d", getMax() < getProgress() ? getMax() : getProgress() );
+        mCurrentDrawText = String.format("%d", getMax() < getProgress() ? getMax() : getProgress());
         mCurrentDrawText = mPrefix + mCurrentDrawText + mSuffix;
         mDrawTextWidth = mTextPaint.measureText(mCurrentDrawText);
 
@@ -428,7 +436,7 @@ public class NumberProgressBar extends View {
             setProgress(getProgress() + by);
         }
 
-        if(mListener != null){
+        if (mListener != null) {
             mListener.onProgressChange(getProgress(), getMax());
         }
     }
@@ -499,7 +507,15 @@ public class NumberProgressBar extends View {
         return mIfDrawText;
     }
 
-    public void setOnProgressBarListener(OnProgressBarListener listener){
+    public void setOnProgressBarListener(OnProgressBarListener listener) {
         mListener = listener;
+    }
+
+    public Typeface getTypeface() {
+        return typeface;
+    }
+
+    public void setTypeface(Typeface typeface) {
+        this.typeface = typeface;
     }
 }
